@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-//let logoutTime;
+let logoutTime;
 const calcRemainingTime = (expiresIn) => {
     const currentTime = new Date().getTime();
     const adjustedExpiresIn = new Date(expiresIn).getTime();
@@ -28,6 +28,8 @@ const authSlice = createSlice({
             state.kind = "";
             state.expiresIn = "";
             localStorage.removeItem("idToken");
+            if (logoutTime)
+                clearTimeout(logoutTime);
         },
         login(state, action) {
             if (action.payload.idToken != null && action.payload.idToken !== "" ) {
